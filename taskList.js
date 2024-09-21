@@ -35,6 +35,11 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
     dueTimeCell.textContent = dueTime;
     newRow.appendChild(dueTimeCell);
 
+    // Create and append the status cell (default is "Pending")
+    const statusCell = document.createElement('td');
+    statusCell.textContent = 'Pending'; // Default status
+    newRow.appendChild(statusCell);
+
     // Append the new row to the table body
     taskTableBody.appendChild(newRow);
 
@@ -44,4 +49,3 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
     // Optionally hide the form after submission
     document.getElementById('taskForm').style.display = 'none';
 });
-
