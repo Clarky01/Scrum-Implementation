@@ -27,24 +27,13 @@ document.getElementById('taskForm').addEventListener('submit', function(event) {
     taskDescriptionCell.textContent = taskDescription;
     newRow.appendChild(taskDescriptionCell);
 
-    const dueDateCell = document.createElement('td');
-    dueDateCell.textContent = dueDate;
-    newRow.appendChild(dueDateCell);
-
-    const dueTimeCell = document.createElement('td');
-    dueTimeCell.textContent = dueTime;
-    newRow.appendChild(dueTimeCell);
-
-    // Create and append the status cell (default is "Pending")
-    const statusCell = document.createElement('td');
-    statusCell.textContent = 'Pending'; // Default status
-    newRow.appendChild(statusCell);
+    // Combine the due date and due time into one string
+    const dueDateTimeCell = document.createElement('td');
+    dueDateTimeCell.textContent = `${dueDate} ${dueTime}`; // Combining date and time
+    newRow.appendChild(dueDateTimeCell);
 
     // Append the new row to the table body
     taskTableBody.appendChild(newRow);
-
-    // Clear the form after submission
-    document.getElementById('taskForm').reset();
 
     // Optionally hide the form after submission
     document.getElementById('taskForm').style.display = 'none';
