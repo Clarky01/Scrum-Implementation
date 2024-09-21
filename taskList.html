@@ -8,32 +8,23 @@
 </head>
 <body>
 
-    <div class="task-container">
+    <div class="taskList-container">
         <h1>Task List</h1>
-        <li id="taskList">
-            <!-- Tasks will be populated here -->
-        </li>
-
-        <div class="task-list">
-            <form id="task-list">
-            <label for="taskName">Task Name:</label>
-            <input type="text" id="taskName" placeholder="Enter Task Name" required>
-
-            <label for="taskDescription">Task Description:</label>
-            <textarea id="taskDescription" placeholder="Enter Task Description" required></textarea>
-        </form>
+        <!-- Task Table -->
+        <table id="taskTable">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Task Description</th>
+                    <th>Due Date</th>
+                    <th>Due Time</th>
+                </tr>
+            </thead>
+        </table>
+        <button id="addTaskButton" type="button">ADD NEW TASK</button>
         </div>
 
-        <button id="backButton">Add Task</button>
-
-    </div>
-
-    <script src="tasklist.js"></script>
-    <script>
-        document.getElementById('backButton').addEventListener('click', function() {
-            window.location.href = 'addtask.html';
-        });
-    </script>
-
+    <script src="taskList.js"></script>
 </body>
 </html>
+
