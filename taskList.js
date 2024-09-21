@@ -1,3 +1,4 @@
+
 document.getElementById('addTaskButton').addEventListener('click', function() {
     // Redirect to the task creation page when "ADD NEW TASK" is clicked
     window.location.href = 'addTask.html';
