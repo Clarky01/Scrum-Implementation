@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="task-container">
+        <h1>Task List</h1>
+        <li id="taskList">
+            <!-- Tasks will be populated here -->
+        </li>
+
+        <div class="task-list">
+            <form id="task-list">
+            <label for="taskName">Task Name:</label>
+            <input type="text" id="taskName" placeholder="Enter Task Name" required>
+
+            <label for="taskDescription">Task Description:</label>
+            <textarea id="taskDescription" placeholder="Enter Task Description" required></textarea>
+        </form>
+        </div>
+
+        <button id="backButton">Add Task</button>
+
+    </div>
+
+    <script src="tasklist.js"></script>
+    <script>
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = 'addtask.html';
+        });
+    </script>
+
+</body>
+</html>
