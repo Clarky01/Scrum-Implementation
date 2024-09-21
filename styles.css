@@ -13,12 +13,22 @@ body {
     align-items: center;
 }
 
+.taskList-container {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 900px; 
+    text-align: center;
+    color: black;
+}
+
 .task-container {
     background: rgba(255, 255, 255, 0.3);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 500px; 
     text-align: center;
     color: black;
 }
@@ -90,3 +100,58 @@ button {
 button:hover {
     background-color: #ddbe59;
 }
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    background-color: #FFF8DC;
+    color: black;
+}
+
+th {
+    background-color: #f1dc69;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+#addTaskButton {
+    margin-top: 20px;
+}
+
+  #task-table th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#task-table {
+    border-collapse: collapse; /* Ensures borders look clean */
+    width: 100%;
+  }
+  
+  #task-table th, #task-table td {
+    border-right: 1px solid black; /* Adds a vertical line */
+    padding: 10px;
+    text-align: left;
+  }
+  
+  #task-table th:last-child, #task-table td:last-child {
+    border-right: none; /* Removes the line after the last column */
+  }
+  
+  
