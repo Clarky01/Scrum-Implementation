@@ -3,38 +3,46 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
     window.location.href = 'addTask.html';
 });
 
-document.getElementById('taskForm').addEventListener('submit', function(event) {
+
+document.getElementById('taskForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    // Get the values from the form
+
     const taskName = document.getElementById('taskName').value;
     const taskDescription = document.getElementById('taskDescription').value;
     const dueDate = document.getElementById('dueDate').value;
     const dueTime = document.getElementById('dueTime').value;
 
-    // Get the task table body
-    const taskTableBody = document.querySelector('#taskTable tbody');
 
-    // Create a new row
-    const newRow = document.createElement('tr');
+    const dueDateTime = `${dueDate} ${dueTime}`;
 
-    // Create and append cells for task details
-    const taskNameCell = document.createElement('td');
-    taskNameCell.textContent = taskName;
-    newRow.appendChild(taskNameCell);
 
-    const taskDescriptionCell = document.createElement('td');
-    taskDescriptionCell.textContent = taskDescription;
-    newRow.appendChild(taskDescriptionCell);
+    try {
+        const response = await fetch('tasks.php', { // Ensure this points to your PHP file
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: taskName,
+                description: taskDescription,
+                dueDateTime: dueDateTime
+            })
+        });
 
-    // Combine the due date and due time into one string
-    const dueDateTimeCell = document.createElement('td');
-    dueDateTimeCell.textContent = `${dueDate} ${dueTime}`; // Combining date and time
-    newRow.appendChild(dueDateTimeCell);
 
-    // Append the new row to the table body
-    taskTableBody.appendChild(newRow);
+        const responseData = await response.json();
+        console.log('Response from server:', responseData);
 
-    // Optionally hide the form after submission
-    document.getElementById('taskForm').style.display = 'none';
+
+        if (response.ok) {
+            alert('Task created successfully with ID: ' + responseData.id);
+            window.location.href = 'taskList.html';
+        } else {
+            alert('Error creating task: ' + responseData.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong.');
+    }
 });
