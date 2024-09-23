@@ -1,18 +1,37 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('taskForm');
+document.getElementById('taskForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); 
+    const taskName = document.getElementById('taskName').value;
+    const taskDescription = document.getElementById('taskDescription').value;
+    const dueDate = document.getElementById('dueDate').value;
+    const dueTime = document.getElementById('dueTime').value;
 
-        const taskName = document.getElementById('taskName').value;
-        const taskDescription = document.getElementById('taskDescription').value;
-        const dueDate = document.getElementById('dueDate').value;
-        const dueTime = document.getElementById('dueTime').value;
+    const dueDateTime = `${dueDate} ${dueTime}`;
 
-        console.log(`Task Details:\nName: ${taskName}\nDescription: ${taskDescription}\nDue Date: ${dueDate}\nDue Time: ${dueTime}`);
+    try {
+        const response = await fetch('/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: taskName,
+                description: taskDescription,
+                dueDateTime: dueDateTime
+            })
+        });
 
-        window.location.href = 'tasklist.html'; 
-        
-        form.reset();
-    });
+        const responseData = await response.json();
+        console.log('Response from server:', responseData);
+
+        if (response.ok) {
+            alert('Task created successfully with ID: ' + responseData.id);
+            window.location.href = 'taskList.html';
+        } else {
+            alert('Error creating task: ' + responseData.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong.');
+    }
 });
