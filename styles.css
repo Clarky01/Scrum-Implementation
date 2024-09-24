@@ -113,6 +113,7 @@ th, td {
     border-bottom: 1px solid #ddd;
     background-color: #FFF8DC;
     color: black;
+    text-align: center;
 }
 
 th {
@@ -140,18 +141,16 @@ tbody tr:nth-child(even) {
 }
 
 #task-table {
-    border-collapse: collapse; /* Ensures borders look clean */
+    border-collapse: collapse;
     width: 100%;
   }
   
   #task-table th, #task-table td {
-    border-right: 1px solid black; /* Adds a vertical line */
+    border-right: 1px solid black;
     padding: 10px;
     text-align: left;
   }
   
   #task-table th:last-child, #task-table td:last-child {
-    border-right: none; /* Removes the line after the last column */
+    border-right: none;
   }
-  
-  
