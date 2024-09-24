@@ -1,24 +1,16 @@
 document.getElementById('addTaskButton').addEventListener('click', function() {
-    // Redirect to the task creation page when "ADD NEW TASK" is clicked
     window.location.href = 'addTask.html';
 });
-
 
 document.getElementById('taskForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-
     const taskName = document.getElementById('taskName').value;
     const taskDescription = document.getElementById('taskDescription').value;
-    const dueDate = document.getElementById('dueDate').value;
-    const dueTime = document.getElementById('dueTime').value;
-
-
-    const dueDateTime = `${dueDate} ${dueTime}`;
-
+    const dueDateTime = document.getElementById('dueDateTime').value;
 
     try {
-        const response = await fetch('tasks.php', { // Ensure this points to your PHP file
+        const response = await fetch('tasks.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,10 +22,8 @@ document.getElementById('taskForm').addEventListener('submit', async function(ev
             })
         });
 
-
         const responseData = await response.json();
         console.log('Response from server:', responseData);
-
 
         if (response.ok) {
             alert('Task created successfully with ID: ' + responseData.id);
