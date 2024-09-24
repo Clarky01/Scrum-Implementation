@@ -154,3 +154,20 @@ tbody tr:nth-child(even) {
   #task-table th:last-child, #task-table td:last-child {
     border-right: none;
   }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: #48d14d;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #7dbd80;
+}
