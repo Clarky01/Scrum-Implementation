@@ -9,7 +9,7 @@ document.getElementById('taskForm').addEventListener('submit', async function(ev
     const dueDateTime = `${dueDate} ${dueTime}`;
 
     try {
-        const response = await fetch('/tasks', {
+        const response = await fetch('/Scrum/tasks.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -17,8 +17,7 @@ document.getElementById('taskForm').addEventListener('submit', async function(ev
             body: JSON.stringify({
                 name: taskName,
                 description: taskDescription,
-                dueDateTime: dueDateTime,
-                status: 'pending'
+                dueDateTime: dueDateTime
             })
         });
 
