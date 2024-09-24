@@ -17,7 +17,8 @@ document.getElementById('taskForm').addEventListener('submit', async function(ev
             body: JSON.stringify({
                 name: taskName,
                 description: taskDescription,
-                dueDateTime: dueDateTime
+                dueDateTime: dueDateTime,
+                status: 'pending'
             })
         });
 
