@@ -16,17 +16,46 @@
                     <th>Task Description</th>
                     <th>Due Date</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Task rows will be inserted here -->
             </tbody>
         </table>
+        
         <button id="addTaskButton" type="button">ADD NEW TASK</button>
+    </div>
+
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h1>Edit Task</h1>
+            <form id="editTaskForm">
+                <label for="taskName">Task Name:</label>
+                <input type="text" id="taskName" required>
+                
+                <label for="taskDescription">Task Description:</label>
+                <textarea id="taskDescription" required></textarea>
+                
+                <label for="taskDueDate">Due Date:</label>
+                <input type="date" id="taskDueDate" required>
+                
+                <label for="taskDueTime">Due Time:</label>
+                <input type="time" id="taskDueTime" required>
+                
+                <label for="taskStatus">Status:</label>
+                <select id="taskStatus">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+                
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
     </div>
 
     <script src="taskList.js"></script>
 
 </body>
 </html>
-
