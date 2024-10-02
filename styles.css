@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -32,7 +33,15 @@ body {
     text-align: center;
     color: black;
 }
+.footerBottom{
+    background-color: #b2b435;
+    padding: 20px;
+    text-align: center;
 
+}
+.footerBottom p{
+    color: white;
+}
 h1 {
     margin-bottom: 20px;
     font-size: 24px;
