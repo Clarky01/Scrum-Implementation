@@ -7,6 +7,4 @@ CREATE TABLE tasks (
     description TEXT NOT NULL,
     due_date_time DATETIME NOT NULL
 );
-ALTER TABLE tasks ADD COLUMN status ENUM('Pending', 'completed') DEFAULT 'pending';
-
-
+ALTER TABLE tasks ADD COLUMN status ENUM('Pending', 'In Progress', 'Completed') DEFAULT 'Pending'
