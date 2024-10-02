@@ -5,7 +5,6 @@ document.getElementById('taskForm').addEventListener('submit', async function(ev
     const taskDescription = document.getElementById('taskDescription').value;
     const dueDate = document.getElementById('dueDate').value;
     const dueTime = document.getElementById('dueTime').value;
-    const status = document.getElementById('status').value;
 
     const dueDateTime = `${dueDate} ${dueTime}`;
 
@@ -18,8 +17,7 @@ document.getElementById('taskForm').addEventListener('submit', async function(ev
             body: JSON.stringify({
                 name: taskName,
                 description: taskDescription,
-                dueDateTime: dueDateTime,
-                status: status
+                dueDateTime: dueDateTime
             })
         });
 
