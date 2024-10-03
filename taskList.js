@@ -1,36 +1,76 @@
+// Event listener for the "ADD NEW TASK" button
 document.getElementById('addTaskButton').addEventListener('click', function() {
+    // Redirects to the task creation page when clicked
     window.location.href = 'addTask.html';
 });
 
-// Function to open the edit form in a modal
-function openEditForm(name, description, dueDate, dueTime, status) {
-    document.getElementById('taskName').value = name;
-    document.getElementById('taskDescription').value = description;
-    document.getElementById('taskDueDate').value = dueDate;
-    document.getElementById('taskDueTime').value = dueTime;
-    document.getElementById('taskStatus').value = status;
+// Function to open the edit form in a modal with the task data populated
+function openEditForm(task) {
+    // Set task details in the edit form fields
+    document.getElementById('taskName').value = task.name;
+    document.getElementById('taskDescription').value = task.description;
 
+    // Set the due date and time in the edit form
+    const dueDateTime = new Date(task.due_date_time);
+    document.getElementById('taskDueDate').value = dueDateTime.toISOString().split('T')[0];
+    document.getElementById('taskDueTime').value = dueDateTime.toTimeString().split(' ')[0];
+
+    // Set the task ID and status in the form
+    document.getElementById('editTaskId').value = task.id;
+    document.getElementById('taskStatus').value = task.status;
+
+    // Display the edit modal
     document.getElementById('editTaskModal').style.display = 'block';
-    
-    document.getElementById('editTaskForm').onsubmit = function(e) {
-        e.preventDefault();
-        alert('Changes saved!'); // You would send the data to your backend here
-        closeModal();
-        fetchTasks(); // Refresh the task list
+
+    // Handle the form submission for editing the task
+    document.getElementById('editTaskForm').onsubmit = async function(e) {
+        e.preventDefault(); // Prevents default form submission behavior
+
+        // Create an updated task object with the form data
+        const updatedTask = {
+            id: document.getElementById('editTaskId').value,
+            name: document.getElementById('taskName').value,
+            description: document.getElementById('taskDescription').value,
+            dueDateTime: `${document.getElementById('taskDueDate').value} ${document.getElementById('taskDueTime').value}`,
+            status: document.getElementById('taskStatus').value // Get updated status
+        };
+
+        try {
+            // Send the updated task data to the server for processing
+            const response = await fetch(`updateTask.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Content type set as JSON
+                },
+                body: JSON.stringify(updatedTask) // Send updated task as JSON
+            });
+
+            if (response.ok) {
+                alert('Task updated successfully!');
+                closeModal(); // Close the modal after successful update
+                fetchTasks(); // Refresh the task list
+            } else {
+                const errorData = await response.json();
+                alert('Error updating task: ' + errorData.error); // Show error if any
+            }
+        } catch (error) {
+            console.error('Error updating task:', error);
+            alert('Error updating task.');
+        }
     };
 }
 
 // Function to close the modal
 function closeModal() {
-    document.getElementById('editTaskModal').style.display = 'none';
+    document.getElementById('editTaskModal').style.display = 'none'; // Hides the modal
 }
 
 // Function to delete a task
 async function deleteTask(taskId) {
-    if (confirm('Are you sure you want to delete this task?')) {
+    if (confirm('Are you sure you want to delete this task?')) { // Confirm deletion
         try {
-            // Here you would typically send a request to your backend to delete the task
-            await fetch(`deleteTask.php?id=${taskId}`, { method: 'DELETE' }); // Replace with your actual delete endpoint
+            // Send DELETE request to the server to remove the task
+            await fetch(`deleteTask.php?id=${taskId}`, { method: 'DELETE' });
             fetchTasks(); // Refresh the task list after deletion
         } catch (error) {
             console.error('Error deleting task:', error);
@@ -38,46 +78,43 @@ async function deleteTask(taskId) {
     }
 }
 
-// Fetch and display tasks
+// Function to fetch and display tasks in the table
 async function fetchTasks() {
     try {
-        const response = await fetch('getTasks.php'); // Ensure this points to your PHP file for fetching tasks
+        // Fetch the list of tasks from the server
+        const response = await fetch('getTasks.php');
         const tasks = await response.json();
         const taskTableBody = document.getElementById('taskTable').querySelector('tbody');
-        taskTableBody.innerHTML = ''; // Clear previous rows
+        taskTableBody.innerHTML = ''; // Clear previous task rows
 
+        // Loop through the fetched tasks and insert rows into the task table
         tasks.forEach(task => {
             const row = taskTableBody.insertRow();
-            row.insertCell(0).innerText = task.name;
-            row.insertCell(1).innerText = task.description;
+            row.insertCell(0).innerText = task.name; // Task name
+            row.insertCell(1).innerText = task.description; // Task description
 
-            // Combine due date and due time
+            // Format the due date and time
             const dueDate = new Date(task.due_date_time);
-            const formattedDate = dueDate.toLocaleDateString(); // Format as MM/DD/YYYY
-            const formattedTime = dueDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format as HH:MM AM/PM
-            row.insertCell(2).innerText = `${formattedDate} | ${formattedTime}`; // Combine date and time
+            const formattedDate = dueDate.toLocaleDateString();
+            const formattedTime = dueDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            row.insertCell(2).innerText = `${formattedDate} | ${formattedTime}`; // Due date/time
 
-            row.insertCell(3).innerText = task.status;
+            row.insertCell(3).innerText = task.status; // Task status
 
+            // Add Edit and Delete buttons for each task
             const actionsCell = row.insertCell(4);
-            
-            // Create Edit button
+
+            // Create Edit button and attach click event to open the edit modal
             const editButton = document.createElement('button');
             editButton.innerText = 'Edit';
-            editButton.style.backgroundColor = 'green'; // Make the edit button green
-            editButton.onclick = () => openEditForm(
-                task.name,
-                task.description,
-                formattedDate, // Use the formatted date
-                formattedTime, // Use the formatted time
-                task.status
-            );
+            editButton.style.backgroundColor = 'green';
+            editButton.onclick = () => openEditForm(task); // Open edit modal
             actionsCell.appendChild(editButton);
 
-            // Create Delete button
+            // Create Delete button and attach click event to delete the task
             const deleteButton = document.createElement('button');
             deleteButton.innerText = 'Delete';
-            deleteButton.onclick = () => deleteTask(task.id); // Assuming task.id is the unique identifier
+            deleteButton.onclick = () => deleteTask(task.id); // Delete task
             actionsCell.appendChild(deleteButton);
         });
     } catch (error) {
@@ -85,5 +122,5 @@ async function fetchTasks() {
     }
 }
 
-// Call fetchTasks on page load to populate the task list
+// Fetch tasks on page load to populate the task list
 window.onload = fetchTasks;
