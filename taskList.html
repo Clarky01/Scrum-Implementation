@@ -4,58 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task List</title>
+
+    <!-- Links to external CSS file for styling -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Main container for the task list -->
     <div class="taskList-container">
         <h1>Task List</h1>
+        
+        <!-- Table for displaying tasks -->
         <table id="taskTable">
             <thead>
                 <tr>
-                    <th>Task Name</th>
-                    <th>Task Description</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Task Name</th> <!-- Column for task name -->
+                    <th>Task Description</th> <!-- Column for task description -->
+                    <th>Due Date/Time</th> <!-- Column for due date and time -->
+                    <th>Status</th> <!-- Column for task status -->
+                    <th>Actions</th> <!-- Column for edit/delete actions -->
                 </tr>
             </thead>
             <tbody>
+                <!-- Task rows will be inserted here dynamically -->
             </tbody>
         </table>
-        
+
+        <!-- Button to add a new task -->
         <button id="addTaskButton" type="button">ADD NEW TASK</button>
     </div>
 
-    <div id="editTaskModal" class="modal">
+    <!-- Modal for editing a task -->
+    <div id="editTaskModal" style="display:none;">
         <div class="modal-content">
+
+            <!-- Close button for the modal -->
             <span class="close" onclick="closeModal()">&times;</span>
-            <h1>Edit Task</h1>
+            <h2>Edit Task</h2>
+            
+            <!-- Form for editing task details -->
             <form id="editTaskForm">
+
+                <!-- Hidden field to store the ID of the task being edited -->
+                <input type="hidden" id="editTaskId">
+
+                <!-- Input for task name -->
                 <label for="taskName">Task Name:</label>
                 <input type="text" id="taskName" required>
-                
+
+                <!-- Input for task description -->
                 <label for="taskDescription">Task Description:</label>
                 <textarea id="taskDescription" required></textarea>
-                
-                <label for="taskDueDate">Due Date:</label>
-                <input type="date" id="taskDueDate" required>
-                
-                <label for="taskDueTime">Due Time:</label>
-                <input type="time" id="taskDueTime" required>
-                
+
+                <!-- Container for date and time inputs -->
+                <div class="date-time-container">
+                    <div class="date-section">
+
+                        <!-- Input for task due date -->
+                        <label for="taskDueDate">Due Date:</label>
+                        <input type="date" id="taskDueDate" required>
+                    </div>
+                    <div class="time-section">
+
+                        <!-- Input for task due time -->
+                        <label for="taskDueTime">Due Time:</label>
+                        <input type="time" id="taskDueTime" required>
+                    </div>
+                </div>
+
+                <!-- Dropdown for selecting task status -->
                 <label for="taskStatus">Status:</label>
-                <select id="taskStatus">
+                <select id="taskStatus" required>
                     <option value="Pending">Pending</option>
-                    <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                 </select>
-                
-                <button type="submit">Save Changes</button>
+
+                <!-- Submit button for updating the task -->
+                <button type="submit">Update Task</button>
             </form>
         </div>
     </div>
 
+    <!-- JavaScript file for handling task list functionality -->
     <script src="taskList.js"></script>
-
 </body>
 </html>
